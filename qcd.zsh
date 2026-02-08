@@ -120,6 +120,7 @@ qcd - quick cd bookmarks
 
 Usage:
   qcd add
+  qcd add .
   qcd remove <alias>
   qcd list
   qcd <alias>
@@ -164,21 +165,25 @@ qcd() {
     add)
       local input_path input_alias path q_alias
 
-      printf "add the path: "
-      IFS= read -r input_path
-      [[ -n "$input_path" ]] || {
-        print -- "qcd: no path provided"
-        return 1
-      }
+      if [[ "${1-}" == "." ]]; then
+        path="${PWD:A}"
+      else
+        printf "add the path: "
+        IFS= read -r input_path
+        [[ -n "$input_path" ]] || {
+          print -- "qcd: no path provided"
+          return 1
+        }
 
-      input_path="$(_qcd_strip_quotes "$input_path")"
-      input_path="${~input_path}"
-      [[ "$input_path" = /* ]] || input_path="$PWD/$input_path"
-      path="${input_path:A}"
+        input_path="$(_qcd_strip_quotes "$input_path")"
+        input_path="${~input_path}"
+        [[ "$input_path" = /* ]] || input_path="$PWD/$input_path"
+        path="${input_path:A}"
 
-      if [[ ! -d "$path" ]]; then
-        print -- "qcd: not a directory: $path"
-        return 1
+        if [[ ! -d "$path" ]]; then
+          print -- "qcd: not a directory: $path"
+          return 1
+        fi
       fi
 
       printf "add the alias: "

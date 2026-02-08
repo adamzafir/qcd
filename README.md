@@ -7,6 +7,7 @@ It is a small zsh bookmark manager for directories.
 ## Features
 
 - `qcd add`: add a directory bookmark
+- `qcd add .`: bookmark the current directory (asks alias only)
 - `qcd <alias>`: jump to a saved directory
 - `qcd list`: list all bookmarks in aligned columns
 - `qcd remove <alias>`: remove a bookmark
@@ -45,6 +46,13 @@ source ~/.zshrc
 qcd add
 # add the path: ~/Desktop/Programming
 # add the alias: prog
+```
+
+### Add current directory quickly
+
+```zsh
+qcd add .
+# add the alias: here
 ```
 
 ### Jump to a bookmark
