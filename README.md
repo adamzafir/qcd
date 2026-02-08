@@ -10,6 +10,7 @@ It is a small zsh bookmark manager for directories.
 - `qcd add .`: bookmark the current directory (asks alias only)
 - `qcd <alias>`: jump to a saved directory
 - `qcd list`: list all bookmarks in aligned columns
+- `qcd rename <oldalias> <newalias>`: rename an existing alias
 - `qcd remove <alias>`: remove a bookmark
 - `qcd help`: show usage
 - Persistent storage in `~/.qcd_bookmarks.zsh`
@@ -71,6 +72,12 @@ qcd list
 
 ```zsh
 qcd remove prog
+```
+
+### Rename a bookmark alias
+
+```zsh
+qcd rename prog work
 ```
 
 ### Help

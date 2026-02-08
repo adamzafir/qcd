@@ -121,6 +121,7 @@ qcd - quick cd bookmarks
 Usage:
   qcd add
   qcd add .
+  qcd rename <oldalias> <newalias>
   qcd remove <alias>
   qcd list
   qcd <alias>
@@ -222,6 +223,43 @@ qcd() {
       unset "QCD_MAP[$q_alias]"
       _qcd_save || return 1
       print -- "qcd: removed '$q_alias'"
+      ;;
+
+    rename)
+      local old_alias new_alias dest
+      old_alias="$(_qcd_normalize_alias "${1-}")"
+      new_alias="$(_qcd_normalize_alias "${2-}")"
+
+      [[ -n "$old_alias" && -n "$new_alias" ]] || {
+        print -- "qcd: usage: qcd rename <oldalias> <newalias>"
+        return 1
+      }
+
+      if [[ -z "${QCD_MAP[$old_alias]+x}" ]]; then
+        print -- "qcd: no such alias: $old_alias"
+        return 1
+      fi
+
+      if [[ ! "$new_alias" =~ ^[A-Za-z0-9._-]+$ ]]; then
+        print -- "qcd: alias can only contain letters, numbers, dot, underscore, dash"
+        return 1
+      fi
+
+      if [[ "$old_alias" == "$new_alias" ]]; then
+        print -- "qcd: old and new alias are the same: $old_alias"
+        return 0
+      fi
+
+      if [[ -n "${QCD_MAP[$new_alias]+x}" ]]; then
+        print -- "qcd: alias already exists: $new_alias"
+        return 1
+      fi
+
+      dest="${QCD_MAP[$old_alias]}"
+      unset "QCD_MAP[$old_alias]"
+      QCD_MAP[$new_alias]="$dest"
+      _qcd_save || return 1
+      print -- "qcd: renamed '$old_alias' -> '$new_alias'"
       ;;
 
     *)
