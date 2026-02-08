@@ -116,7 +116,17 @@ _qcd_save() {
 
 _qcd_help() {
   cat <<'EOF'
-qcd - quick cd bookmarks
+                        █████
+                       ░░███
+  ████████  ██████   ███████
+ ███░░███  ███░░███ ███░░███
+░███ ░███ ░███ ░░░ ░███ ░███
+░███ ░███ ░███  ███░███ ░███
+░░███████ ░░██████ ░░████████
+ ░░░░░███  ░░░░░░   ░░░░░░░░
+     ░███
+     █████
+    ░░░░░
 
 Usage:
   qcd add
@@ -124,6 +134,7 @@ Usage:
   qcd rename <oldalias> <newalias>
   qcd remove <alias>
   qcd list
+  qcd show
   qcd <alias>
   qcd help
 EOF
@@ -144,7 +155,7 @@ qcd() {
   fi
 
   case "$cmd" in
-    help|-h|--help)
+    help|-h|--help|show)
       _qcd_help
       ;;
 
