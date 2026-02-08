@@ -20,6 +20,17 @@ It is a small zsh bookmark manager for directories.
 
 ## Install
 
+### Homebrew (recommended)
+
+```zsh
+brew tap adamzafir/qcd https://github.com/adamzafir/qcd
+brew install qcd
+echo 'source "$(brew --prefix)/share/qcd/qcd.zsh"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### Manual
+
 ```zsh
 git clone https://github.com/adamzafir/qcd.git ~/.qcd
 echo 'source ~/.qcd/qcd.zsh' >> ~/.zshrc
