@@ -7,14 +7,48 @@ class Qcd < Formula
 
   def install
     pkgshare.install "qcd.zsh"
+    (pkgshare/"install.zsh").write <<~EOS
+      #!/usr/bin/env zsh
+      _qcd_install_main() {
+        emulate -L zsh
+        setopt errexit nounset pipefail
+
+        local zshrc source_line is_first_install
+        zshrc="${ZDOTDIR:-$HOME}/.zshrc"
+        touch "$zshrc"
+
+        source_line='source "#{opt_pkgshare}/qcd.zsh"'
+        is_first_install=0
+        if ! grep -qxF "$source_line" "$zshrc"; then
+          printf '\\n%s\\n' "$source_line" >> "$zshrc"
+          is_first_install=1
+        fi
+
+        if [[ "${ZSH_EVAL_CONTEXT-}" == *:file* ]]; then
+          source "#{opt_pkgshare}/qcd.zsh"
+          print -- "qcd: installed and loaded in this shell"
+          if (( is_first_install )); then
+            print -- ""
+            qcd help
+          fi
+        else
+          print -- "qcd: installed in $zshrc"
+          print -- "qcd: run this once to load now:"
+          print -- 'source "#{opt_pkgshare}/qcd.zsh"'
+        fi
+      }
+
+      _qcd_install_main "$@"
+    EOS
+    chmod 0755, pkgshare/"install.zsh"
   end
 
   def caveats
     <<~EOS
       qcd must be sourced to change directories in your current shell.
 
-      Add this to your ~/.zshrc:
-        source "#{opt_pkgshare}/qcd.zsh"
+      Run setup once (adds qcd to ~/.zshrc and loads it now):
+        source "#{opt_pkgshare}/install.zsh"
     EOS
   end
 

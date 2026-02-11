@@ -1,6 +1,6 @@
 # qcd: quick directory bookmarks with persistent storage.
 # Source this file from ~/.zshrc:
-#   source "/Users/adam/Downloads/zshrc editor/qcd.zsh"
+#   source "$HOME/.qcd/qcd.zsh"
 
 export QCD_STORE="${QCD_STORE:-$HOME/.qcd_bookmarks.zsh}"
 typeset -gA QCD_MAP
