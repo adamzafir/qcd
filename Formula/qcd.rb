@@ -59,7 +59,7 @@ class Qcd < Formula
     output = shell_output(
       "zsh -lc 'source \"#{opt_pkgshare}/qcd.zsh\"; " \
       "export QCD_STORE=\"#{testpath}/bookmarks.zsh\"; " \
-      "printf \"#{target}\\nt\\n\" | qcd add >/dev/null; " \
+      "cd \"#{target}\"; qcd add . t >/dev/null; " \
       "qcd t; pwd'"
     ).strip
 

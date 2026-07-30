@@ -21,7 +21,7 @@ It is a small zsh bookmark manager for directories.
 ## Features
 
 - `qcd add`: add a directory bookmark
-- `qcd add .`: bookmark the current directory (asks alias only)
+- `qcd add . [alias]`: bookmark the current directory, optionally naming it inline
 - `qcd <alias>`: jump to a saved directory
 - `qcd list`: list all bookmarks in aligned columns
 - `qcd rename <oldalias> <newalias>`: rename an existing alias
@@ -68,6 +68,12 @@ qcd add
 ```zsh
 qcd add .
 # add the alias: here
+```
+
+### Add current directory in one line
+
+```zsh
+qcd add . here
 ```
 
 ### Jump to a bookmark

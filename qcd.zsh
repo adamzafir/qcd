@@ -131,6 +131,7 @@ _qcd_help() {
 Usage:
   qcd add
   qcd add .
+  qcd add . <alias>
   qcd rename <oldalias> <newalias>
   qcd remove <alias>
   qcd list
@@ -179,6 +180,7 @@ qcd() {
 
       if [[ "${1-}" == "." ]]; then
         path="${PWD:A}"
+        input_alias="${2-}"
       else
         printf "add the path: "
         IFS= read -r input_path
@@ -198,8 +200,10 @@ qcd() {
         fi
       fi
 
-      printf "add the alias: "
-      IFS= read -r input_alias
+      if [[ -z "$input_alias" ]]; then
+        printf "add the alias: "
+        IFS= read -r input_alias
+      fi
       q_alias="$(_qcd_normalize_alias "$input_alias")"
 
       [[ -n "$q_alias" ]] || {
